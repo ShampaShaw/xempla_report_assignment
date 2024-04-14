@@ -1,0 +1,259 @@
+// ReportsPage.scss
+
+@import './../../mixins.scss';
+
+.page-wrapper {
+    @include page;
+    @include page-title-section;
+}
+
+.report-page-wrapper {
+    flex-direction: column; // Change to column to stack elements vertically
+    align-items: center; // Center items horizontally
+    gap: 20px; // Add gap between elements
+    overflow: hidden;
+
+    .no-data {
+        display: none !important;
+
+        img {
+            height: 100px;
+        }
+    }
+
+    .container-opts {
+        width: 100%; // Ensure container spans full width
+
+        .wrapper-in-con-opts {
+            @include white-bg-block;
+
+            .input-search-wrapper {
+                position: relative;
+
+                .input-seach {
+                    @include xem-input-text;
+                    padding-left: 27px;
+                    width: 100%; // Make input full width
+                }
+
+                .search-icon {
+                    height: 13px;
+                    left: 10px;
+                    top: 12px;
+                }
+
+                .search-item {
+                    display: none;
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    width: 100%;
+                    padding: 10px;
+                    background-color: #fff;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                }
+
+                .search-item.active {
+                    display: block;
+                }
+            }
+        }
+
+        .asset-report-list {
+            height: calc(100vh - 270px);
+            min-height: 463px;
+            overflow: auto;
+            padding-right: 3px;
+
+            .indi-report-name {
+                span {
+                    padding: 14px;
+                    font-size: 13px;
+                    color: var(--color-black);
+                    background: var(--color-07);
+                    border-radius: 8px;
+                    @include com-transition;
+                    cursor: pointer;
+
+                    &:hover {
+                        background: var(--color-09);
+                    }
+                }
+            }
+        }
+    }
+
+    .container-graph {
+        width: 100%; // Ensure container spans full width
+
+        .wrapper-graph-report {
+            @include white-bg-block;
+            padding: 4px;
+
+            .text-insights-wrapper {
+                max-height: 200px;
+                overflow: auto;
+
+                .in-insi-wrapper {
+                    background: var(--color-07);
+                    border: 1px solid var(--color-09);
+                    padding: 15px;
+                    border-radius: 10px;
+
+                    p {
+                        font-size: 13px;
+                        margin: 0;
+                    }
+                }
+            }
+
+            .wrapper-graph-section {
+                p {
+                    font-weight: 600;
+                }
+
+                .graph-wrapper {
+                    width: 100%; // Ensure graph spans full width
+                    height: calc(100vh - 385px);
+                    min-height: 500px;
+                }
+            }
+        }
+    }
+}
+
+.button {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+
+    .barButton {
+        background-color: #4caf50; // Green
+        color: white;
+    }
+
+    .lineButton {
+        background-color: #2196f3; // Blue
+        color: white;
+    }
+
+    .pieButton {
+        background-color: #ff5722; // Orange
+        color: white;
+    }
+
+    .button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}
+
+.generate-data-form-wrapper {
+    margin-top: 20px;
+
+    form {
+        display: flex;
+        flex-direction: column;
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input[type='text'], input[type='number'], textarea {
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+
+            &:focus {
+                outline: none;
+                border-color: #007bff;
+            }
+        }
+
+        button[type='submit'] {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: #0056b3;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 768px) {
+
+    .report-page-wrapper{
+        flex-direction: row;
+        overflow: hidden;
+    }
+    .report-page-wrapper {
+        .container-opts{
+            flex-direction: row;
+            align-items: flex-start;
+        }
+        .container-graph {
+            width: 70%;
+        }
+        .container-opts{
+         width: 30%;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .report-page-wrapper {
+        .container-opts .wrapper-in-con-opts {
+            flex-direction: column;
+            align-items: flex-start;
+            overflow: hidden;
+        }
+    }
+
+    .input-search-wrapper {
+        position: sticky;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #fff;
+        z-index: 999; // Ensure search bar stays on top
+    }
+
+    .container-graph .wrapper-graph-report {
+        padding: 10px; // Increase padding for better spacing on smaller screens
+    }
+
+    .container-graph .wrapper-graph-section .graph-wrapper {
+        height: 300px; // Decrease height of the chart container
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .report-page-wrapper {
+        .container-graph .wrapper-graph-report {
+            padding: 5px; // Further increase padding for smaller screens
+        }
+
+        .container-graph .wrapper-graph-section .graph-wrapper {
+            height: 250px; // Further decrease height of the chart container
+        }
+    }
+}
