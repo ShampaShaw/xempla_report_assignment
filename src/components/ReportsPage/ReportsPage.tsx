@@ -1,20 +1,23 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import './ReportsPage.scss';
 import SearchIcon from './../../assets/images/search-bigiocn.svg';
 import NoDataFoundIcon from './../../assets/images/no-searchfound.png';
 import ReactECharts from 'echarts-for-react';
 import { Data, updateData } from '../../utils/data';
 
+// Define the interface for each item in the Data array
+interface DataItem {
+    name: string;
+    data: { name: string; value: number; avg: number; diff: number; }[];
+    insights?: string; // Make the insights property optional
+}
+
 const ReportsPage = () => {
     const [selectedName, setSelectedName] = useState<string | null>(null);
     const [chartType, setChartType] = useState<'bar' | 'line' | 'pie'>('bar');
     const [searchQuery, setSearchQuery] = useState<string>('');
     const [showGenerateForm, setShowGenerateForm] = useState<boolean>(false);
-    const [newData, setNewData] = useState<{
-        name: string;
-        data: { name: string; value: number; avg: number; diff: number; }[];
-        insights?: string;
-    } | null>(null);
+    const [newData, setNewData] = useState<DataItem | null>(null);
 
     const handleNameClick = (name: string) => {
         setSelectedName(name);
@@ -181,7 +184,7 @@ const ReportsPage = () => {
                             <div className="text-insights-wrapper">
                                 <div className="in-insi-wrapper">
                                     {selectedName && (
-                                        <p>{(filteredData.find(item => item.name === selectedName) as { name: string; data: { name: string; value: number; avg: number; diff: number; }[]; insights?: string })?.insights}</p>
+                                        <p>{(filteredData.find(item => item.name === selectedName) as DataItem)?.insights}</p>
                                     )}
                                 </div>
                             </div>
