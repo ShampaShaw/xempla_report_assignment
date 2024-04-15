@@ -3,6 +3,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import './App.scss';
 import Reports from './pages/Reports';
+import { FcGoogle } from 'react-icons/fc';
 
 function App() {
 
@@ -14,7 +15,7 @@ function App() {
     <Router>
       <Routes>
         {
-          isAuthenticated && <Route path="/login" element={<button onClick={() => loginWithRedirect()}>Log In</button>} />
+      isAuthenticated && <Route path="/Login" element={<button onClick={() => loginWithRedirect()} className='googleButton'>Sign in With<FcGoogle/></button>} />
           
         }
         <Route path="/" element={< Reports />} />

@@ -5,7 +5,7 @@ const LogoutButton = () => {
   const { logout } = useAuth0();
 
   const handleLogout = () => {
-    logout({ logoutParams: { returnTo: window.location.origin + '/login' }}); // Redirect to the login page after logout
+    logout({ logoutParams: { returnTo: window.location.origin + '/Login' }}); // Redirect to the login page after logout
   };
 
   // Check if the user is logged in before rendering the logout button

@@ -11,6 +11,7 @@ import NotificationIcon from './../../assets/images/noti-nav-icon.svg';
 import UserNavIcon from './../../assets/images/user-nav-icon.svg';
 import axios from 'axios';
 import { useTheme } from '../../context/ThemeContext';
+import Login from '../../authForm/login/Login';
 
 const Header = () => {
   const { user, logout, loginWithRedirect } = useAuth0();
@@ -100,7 +101,7 @@ const Header = () => {
                     <a href="/settings">Settings</a>
                   </Menu.Item>
                   <Menu.Item>
-                    <a onClick={() => loginWithRedirect()}>Logout</a>
+                    <a href='/Login'>Logout</a>
                   </Menu.Item>
                 </Menu>
               }
