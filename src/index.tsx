@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Auth0Provider } from '@auth0/auth0-react';
 import { ThemeProvider } from './context/ThemeContext';
 
 const root = ReactDOM.createRoot(
@@ -10,9 +11,17 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <ThemeProvider>
-    <App />
-    </ThemeProvider>
+    <Auth0Provider
+        domain="dev-dziqphk2f5rkz82d.us.auth0.com"
+        clientId="5VNA8EH6OC3O4CkwznQixCp8zh6qFROj"
+        authorizationParams={{
+        redirect_uri: window.location.origin
+      }}
+    >
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
+    </Auth0Provider>
   </React.StrictMode>
   
 );

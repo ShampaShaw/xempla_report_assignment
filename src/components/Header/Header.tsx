@@ -1,35 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { Tooltip } from 'antd';
+import { Tooltip, Menu, Dropdown } from 'antd'; // Import Menu and Dropdown from antd
+import { useAuth0 } from '@auth0/auth0-react';
 import './Header.scss';
 import XemplLogo from './../../assets/images/xempla-logo.svg';
 import NavIconMenu from './../../assets/images/nav-dropdown-icon.svg';
 import ThemeMoon from './../../assets/images/nightmode-nav-icon.svg';
 import ThemeSun from './../../assets/images/light-theme-icon.svg';
 import LocationPin from './../../assets/images/location-nav-icon.svg';
-import WeatherIcon from './../../assets/images/weather-nav-icon.svg';
 import NotificationIcon from './../../assets/images/noti-nav-icon.svg';
 import UserNavIcon from './../../assets/images/user-nav-icon.svg';
 import axios from 'axios';
-import { useTheme } from '../../context/ThemeContext'
+import { useTheme } from '../../context/ThemeContext';
 
 const Header = () => {
+  const { user, logout, loginWithRedirect } = useAuth0();
   const { isDarkMode, setDarkMode, setLightMode } = useTheme();
   const [currentLocation, setCurrentLocation] = useState({ city: '', country_name: '' });
   const [notifications, setNotifications] = useState(0);
   const [temp, setTemp] = useState(0);
 
+  const handleLogout = () => {
+    logout({ logoutParams: { returnTo: window.location.origin + '/login' }}); // Redirect to the login page after logout
+  };
+
   useEffect(() => {
     getLocation();
-    // Check if the theme preference exists in local storage
-    const storedTheme = localStorage.getItem('theme');
-    // Set the initial theme based on the stored preference, or default to 'light' if no preference is found
   }, []);
 
   const getLocation = async () => {
     try {
       const locationResponse = await axios.get('https://ipapi.co/json/');
       setCurrentLocation(locationResponse.data);
-      getTemperature(locationResponse.data.city); // Fetch temperature after getting location
+      getTemperature(locationResponse.data.city);
     } catch (error) {
       console.error('Error fetching location:', error);
     }
@@ -44,10 +46,6 @@ const Header = () => {
     } catch (error) {
       console.error('Error fetching weather:', error);
     }
-  }
-
-  const toggleTheme = () => {
-    // Save the selected theme preference to local storage
   };
 
   const handleNotificationClick = () => {
@@ -56,10 +54,7 @@ const Header = () => {
 
   const tempe = {temp};
   const temperature = tempe.temp - 273.15;
-  console.log(temperature);
-  //round off to 0 decimal places
   const temper = temperature.toFixed(0);
-
 
   return (
     <header className={`w-100 product-header position-fixed ${isDarkMode ? 'dark-theme' : ''}`}>
@@ -93,13 +88,35 @@ const Header = () => {
               </button>
             </div>
           </Tooltip>
-          <div className='dropdown-usernav'>
-            <Tooltip title="Your Profile and settings">
-              <button className='squircle-btn wun-btn'>
+          {/* Render dropdown menu if user is logged in */}
+          {user ? (
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.Item>
+                    <a>{user.name}</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a href="/settings">Settings</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a onClick={() => loginWithRedirect()}>Logout</a>
+                  </Menu.Item>
+                </Menu>
+              }
+              placement="bottomCenter"
+              arrow
+            >
+              <button className='squircle-btn wun-btn me-3'>
                 <img src={UserNavIcon} alt="user" />
               </button>
-            </Tooltip>
-          </div>
+            </Dropdown>
+          ) : (
+            <button className='squircle-btn wun-btn me-3' onClick={() => loginWithRedirect()}>
+              <img src={UserNavIcon} alt="user" />
+            </button>
+          
+          )}
         </div>
       </div>
     </header>
