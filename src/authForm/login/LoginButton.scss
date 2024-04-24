@@ -2,7 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Set height to full viewport height to center vertically */
+  height: 100%; /* Set height to full viewport height to center vertically */
+  width: 100%;
 }
 
 .googleButton {
@@ -15,6 +16,7 @@
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .googleButton:hover {

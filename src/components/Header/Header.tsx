@@ -13,6 +13,9 @@ import axios from 'axios';
 import { useTheme } from '../../context/ThemeContext';
 import Login from '../../authForm/login/Login';
 
+const api = process.env.REACT_APP_API;
+console.log(api);
+
 const Header = () => {
   const { user, logout, loginWithRedirect } = useAuth0();
   const { isDarkMode, setDarkMode, setLightMode } = useTheme();
@@ -21,7 +24,7 @@ const Header = () => {
   const [temp, setTemp] = useState(0);
 
   const handleLogout = () => {
-    logout({ logoutParams: { returnTo: window.location.origin + '/login' }}); // Redirect to the login page after logout
+    logout({ logoutParams: { returnTo: window.location.origin + Login }}); // Redirect to the login page after logout
   };
 
   useEffect(() => {
@@ -41,7 +44,7 @@ const Header = () => {
   const getTemperature = async (city: string) => {
     try {
       const weatherResponse = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=21287ce169a6a9290f46e9e5de0ee13b&units=celcius`
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=21287ce169a6a9290f46e9e5de0ee13b&unit`
       );
       setTemp(weatherResponse.data.main.temp);
     } catch (error) {
